@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="degebug.com是一个开发者的博客，在这里，你将...等一下，我de个bug先！">
+  <meta name="keywords" content="degebug.com,博客,技术,程序员,debug,前端,日记,写作,阅读,原创,吴晓坚">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static',filename='/img/blog-favicon.ico',_external=True) }}">
+  {%block title%}
+    <title>wuxiao 博客</title>
+  {% endblock %}
+  <link href="https://cdn.bootcss.com/normalize/8.0.1/normalize.css" rel="stylesheet">
+  {% block link %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/common.css',_external=True) }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/home.css',_external=True) }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/page-item.css',_external=True) }}">
+  {% endblock %}
+</head>
+<body>
+  <header class="blog-header">
+    <h1 class="blog-logo"><a href="/">degebug.com 博客</a></h1>
+    <nav class="blog-nav">
+      <a class="blog-nav-item" href="/">首页</a>
+      <a class="blog-nav-item" href="/" target="_blank">关于我</a>
+      <a class="blog-nav-item" href="{{ url_for('index.new') }}">发博客</a>
+      <!-- <a class="blog-nav-item" href="//admin.degebug.com" target="_blank">博客管理</a> -->
+    </nav>
+  </header>
+  <div class="blog-container">
+    {%block container%}
+      <section class="blog-category">
+        <h2 class="blog-category-title">分类目录</h2>
+        <ul class="blog-category-list">
+            {% for c in categorys %}
+              <li><a href="{{ url_for('category.index',category = c.title) }}">{{c.title}}</a></li>
+            {% endfor %}
+        </ul>
+      </section>
+      <section class="blog-content">
+        {% block content %}
+          <ul class="blog-content-wrappper" id="blogContent">
+              {% for p in pageData %}
+                <li class="blog-content-item">
+                  <h3 class="blog-content-title"><a href="{{ url_for('page.detail', id=p.id) }}">{{p.title}}</a></h3>
+                  <div class="blog-content-desc">
+                    <p>{{p.desc}}</p>
+                    <a class="blog-content-more" href="{{ url_for('page.detail', id=p.id) }}">阅读更多</a>
+                  </div>
+                  <div class="blog-content-info">
+                    <span class="blog-content-author">作者：{{p.author}}</span>
+                    <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                    <span class="blog-content-comment">分类：{{p.category}}</span>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+        {% endblock %}
+        {% block more %}
+        <div class="blog-more" id="blogMore" data-page="2" data-size="5">更多文章</div>
+        {% endblock %}
+      </section>
+      <aside class="blog-top" id="blogTop">Top</aside>
+    {% endblock %}
+  </div>
+  <footer class="blog-footer">
+    <p>Copyright&copy;2018-2019 吴晓坚 版权所有</p>
+    <p><a target="_blank" rel="noopener noreferrer" href="http://www.miitbeian.gov.cn">粤ICP备18084360号-1</a></p>
+  </footer>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{ url_for('static',filename='js/index.js',_external=True) }}"></script>
+<script>
+  [#$("div[name='content']").each(function(){
+      var text = $(this).html();
+      var reg = new RegExp('\n','g');
+      $(this).html(text.replace(reg,'<br/>'));
+      });#]
+</script>
+</html>

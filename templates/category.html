@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+{% block content %}
+<ul class="blog-content-wrappper" id="blogContent">
+  {% for p in pageData %}
+    <li class="blog-content-item">
+      <h3 class="blog-content-title"><a href="{{ url_for('page.detail', id=p.id) }}">{{p.title}}</a></h3>
+      <div class="blog-content-desc">
+        <p>{{p.desc}}</p>
+        <a class="blog-content-more" href="{{ url_for('page.detail', id=p.id) }}">阅读更多</a>
+      </div>
+      <div class="blog-content-info">
+        <span class="blog-content-author">作者：{{p.author}}</span>
+        <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+        <span class="blog-content-comment">分类：{{p.category}}</span>
+      </div>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
+{% block more %}
+{% endblock %}

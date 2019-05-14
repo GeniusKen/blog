@@ -1,0 +1,22 @@
+{% extends "index.html" %}
+  {% block title %}
+    <title>{{page.title}} | degebug.com 博客</title>
+  {% endblock %}
+  {% block link %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/common.css',_external=True) }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/detail.css',_external=True) }}">
+  {% endblock %}
+  {% block container %}
+    <div class="blog-page">
+      <h2 class="blog-page-title">{{page.title}}</h2>
+      <div class="blog-page-info">
+          <span class="blog-page-author">作者：{{page.author}}</span>
+          <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+          <span class='blog-page-comment'>分类：<a href="{{ url_for('category.index', category=page.category) }}">{{page.category}}</a></span>
+      </div>
+      <div class="blog-page-content"name="content">
+        {{ page.content|neomarkdown }}
+      </div>
+    </div>
+    <aside class="blog-top" id="blogTop">Top</aside>
+  {% endblock %}

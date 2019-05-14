@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发表博客文章</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css',_external=True) }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css',_external=True) }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='lib/editor/editor.css',_external=True) }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='lib/webuploader/webuploader.css',_external=True) }}">
+    <script src="{{ url_for('static',filename='lib/jquery-3.0.0.min.js',_external=True) }}"></script>
+    <script src="{{ url_for('static',filename='lib/markdownit.js',_external=True) }}"></script>
+    <script src="{{ url_for('static',filename='lib/webuploader/webuploader.withoutimage.js',_external=True) }}"></script>
+    <script src="{{ url_for('static',filename='lib/editor/editor.js',_external=True) }}"></script>
+    <script src="{{ url_for('static',filename='lib/editor/ext.js',_external=True) }}"></script>
+</head>
+<body>
+    <div id="main">
+        <div id="content">
+            <div class="panel">
+                <div class="inner post">
+<form id="create_topic_form" method="post" action="{{ url_for('.add') }}">
+    <fieldset>
+        <textarea autofocus class='span9' id='title'
+                  name='title' rows='1'
+                  placeholder="标题字数 10 字以上"></textarea>
+        <div>
+            <textarea class='span5' id='desc'
+                  name='desc' rows='1'
+                  placeholder="一句话概括全文"></textarea>
+            <textarea class='span3' id='author'
+                  name='author' rows='1'
+                  placeholder="作者"></textarea>
+        </div>
+        <span class="tab-selector">选择版块：</span>
+        <select name="category" id="category" required>
+            <option value="">请选择分类</option>
+                {% for c in cs %}
+                <option value="{{ c.title }}">{{ c.title }}</option>
+                {% endfor %}
+        </select>
+        <div class='markdown_editor in_editor'>
+          <div class='markdown_in_editor'>
+            <textarea class='editor' name='content' rows='20' placeholder='文章支持 Markdown 语法, 请注意标记代码'></textarea>
+            <div class='editor_buttons'>
+              <input type="submit" class='span-primary submit_btn' data-loading-text="提交中" value="提交">
+            </div>
+          </div>
+        </div>
+    </fieldset>
+</form>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+  (function () {
+    var editor = new Editor();
+    editor.render($('.editor')[0]);
+  })();
+</script>
+</body>
+</html>
